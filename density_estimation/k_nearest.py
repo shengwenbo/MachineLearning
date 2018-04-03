@@ -11,11 +11,22 @@ def find_k_nearest(data, x, k):
     data = data.sort_values(by="dist")
     return data.iloc[k-1]["dist"]
 
-def calc_V(h, d):
-    return h**d
+def kernel_uniform(u):
+    if u.max() <= 0.5 and u.max() >= -0.5:
+        return 1.0
+    return 0
 
-def calc_prob(k, N, V):
-    return k/N/V
+def kernel_norm(u):
+    sigma = 1
+    return 1/(sigma*np.sqrt(2*np.pi))*np.exp(-u**2/(2*sigma))
+
+def kernel_exp(u):
+    return np.exp(-0.5*u)/4
+
+def calc_prob(N, d, data):
+    kernel = kernel_exp
+    data["kernel"] = data.apply(lambda xi: kernel(xi[1]/d), axis=1)
+    return 1/(N*d)*data["kernel"].sum()
 
 def estimate(data, plots, k1, interval_len):
     N = data.size
@@ -23,7 +34,7 @@ def estimate(data, plots, k1, interval_len):
     k = k_N(k1, N)
     data = pd.DataFrame(data, columns=["data"])
     prediction = pd.DataFrame(plots, columns=["x"])
-    prediction["prob"] = prediction.apply(lambda x: calc_prob(k, N, calc_V(find_k_nearest(data, x, k), d)), axis=1)
+    prediction["prob"] = prediction.apply(lambda x: calc_prob(N, find_k_nearest(data, x, k), data), axis=1)
     prediction["interval_prob"] = prediction.apply(lambda x: x[1] * interval_len, axis=1)
 
     return prediction
