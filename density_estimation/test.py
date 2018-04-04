@@ -20,7 +20,7 @@ def generalize_data_normal(size):
     return data
 
 def estimate(data, h):
-    return k_nearest.estimate(data, plots["x"], h, interval_len)
+    return pazzle.estimate(data, plots["x"], h, interval_len)
 
 def draw(prediction, train_size, h, figure):
     x = prediction["x"]
@@ -41,8 +41,8 @@ if __name__ == "__main__":
     i = 1
 
     arg = [[(20,1),(40,1),(20,0.5),(40,0.5)],
-           [(100,1),(200,1),(100,0.2),(200,0.2)],
-           [(500,1),(1000,1),(500,0.2),(1000,0.2)]
+           [(100,10),(200,1),(100,0.2),(200,0.2)],
+           [(500,50),(1000,1),(500,0.2),(1000,0.2)]
     ]
 
     for a in arg:
