@@ -15,7 +15,7 @@ def window_func_norm(u):
     return 1/np.sqrt(2*np.pi)*np.exp(-0.5* u.dot(u[:,None]))
 
 def window_func_exp(u):
-    return np.exp(-0.5*np.linalg.norm(u, ord=np.inf))/4
+    return np.exp(-0.5*np.linalg.norm(u, ord=1))/4
 
 def prob(data, x, h, N, V, window_func):
     data["window"] = data.apply(lambda xi: window_func((x-xi[0])/h), axis=1)

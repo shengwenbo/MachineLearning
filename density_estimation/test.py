@@ -29,7 +29,7 @@ def draw(prediction, train_size, h, figure):
     figure.plot(x, real_p, color="r")
     figure.plot(x, p, color="b")
     max_y = max(real_p.max(), p.max())
-    figure.text(lowerbound, max_y/2, "N=%d\nk=%d" % (train_size, int(np.ceil(np.sqrt(train_size))/h)))
+    figure.text(lowerbound, max_y/2, "N=%d\nh1=%f" % (train_size, h))
     return
 
 if __name__ == "__main__":
@@ -40,9 +40,9 @@ if __name__ == "__main__":
     cols = 4
     i = 1
 
-    arg = [[(20,1),(40,1),(20,0.5),(40,0.5)],
-           [(100,10),(200,1),(100,0.2),(200,0.2)],
-           [(500,50),(1000,1),(500,0.2),(1000,0.2)]
+    arg = [[(20,0.1),(20,1),(20,5),(20,10)],
+           [(100,0.1),(100,1),(100,5),(100,10)],
+           [(500,0.1),(500,1),(500,5),(500,10)]
     ]
 
     for a in arg:
